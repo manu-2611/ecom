@@ -1,212 +1,134 @@
 {% extends 'shop/basic.html' %}
-
-{% block title%} shop {% endblock %}
-
-       {% block css %}
-
+{% block css %}
           .col-md-3
           {
           display: inline-block;
           margin-left:-4px;
           }
+
           .carousel-indicators .active {
           background-color: blue;
             }
+
           .col-md-3 img{
-          width:100%;
-          height:auto;
+
+          max-width: 160px;
+          height: 190px;
           }
+
           body .carousel-indicator li{
           background-color: blue;
           }
+
           body .carousel-indicators{
           bottom: 0;
           }
+
           body .carousel-control-prev-icon,
           body .carousel-control-next-icon{
           background-color: blue;
+          }
+
+          .carousel-control-prev,
+          .carousel-control-next{
+          top: auto;
+          bottom: auto;
+          padding-top: 222px;
           }
            body .no-padding{
            padding-left: 0,
            padding-right: 0;
            }
-           {% endblock %}
+ {% endblock %}
 
-  
 {% block body %}
-  {% load static %}
-
+{% load static %}
 <div class="container">
-<div id="demo" class="carousel slide my-5" data-ride="carousel">
-    <ul class="carousel-indicators">
-      <li data-target="#demo" data-slide-to="0" class="active"></li>
-      <li data-target="#demo" data-slide-to="1" ></li>
-      <li data-target="#demo" data-slide-to="2" ></li>
-    </ul>
 
     <!--Slideshow starts here -->
+    {% for product, range, nSlides in allProds %}
+    <h3 class="my-4">{{product.0.category}}</h3>
+    <div class="row">
+<div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
+    <ul class="carousel-indicators">
+      <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+
+       {% for i in range %}
+      <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}" ></li>
+      {% endfor %}
+    </ul>
+
+
     <div class="container carousel-inner no-padding">
 
       <div class="carousel-item active">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-       </div>
 
+
+
+        {% for i in product %}
         <div class="col-xs-3 col-sm-3 col-md-3">
           <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
+            <img src='/media/{{i.image}}' class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <h5 class="card-title">{{i.product_name}}</h5>
+              <p class="card-text">{{i.desc}}</p>
+              <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
+                <a href="/shop/products{{i.id}}"> <button id="qr{{i.id}}" class="btn btn-primary cart">View Product</button></a>
             </div>
           </div>
         </div>
+        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+      </div><div class="carousel-item">
+        {% endif %}
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="carousel-item">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="carousel-item">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-       </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/test.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-      </div>
+        {% endfor %}
     </div>
 
-</div>
 
+
+</div>
+</div>
     <!-- left and right controls for the slide -->
-    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>
     </a>
-    <a class="carousel-control-next" href="#demo" data-slide="next">
+    <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
         <span class="carousel-control-next-icon"></span>
     </a>
+</div>
+    {% endfor %}
+</div>
+ {% endblock %}
+{% block js %}
+<script>
+    console.log('working');
 
-    {% endblock %}
+    if (localStorage.getItem('cart') == null){
+    var cart = {};
+    }
+    else
+    {
+    cart= JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    }
 
+    $('.cart').click(function(){
 
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  </body>
-</html>
+     console.log('clicked');
+    var idstr = this.id.toString();
+    console.log(idstr);
+    if(cart[idstr] != undefined) {
+    cart[idstr] = cart[idstr] + 1;
+    }
+    else
+    {
+    cart[idstr] = 1;
+    }
+    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById("cart").innerHTML = Object.keys(cart).length;
+     });
+     $('#popcart').popover()
+     document.getElementById("popcart").setAttribute('data-content','<h5>Cart, your items will be shown here</h5>');
+</script>
+{% endblock %}
